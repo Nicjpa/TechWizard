@@ -1,0 +1,43 @@
+﻿@using TechWizard.Business.ViewModels.DTOs
+@using TechWizard.Data.Roles
+@model ProductViewDTO
+@{
+    ViewData["Title"] = "HardwareDetails";
+}
+
+    
+<div class="detailView">
+    <div class="details-div-wrapper">
+        <div class="details-div">
+            <h5 class="details-product-type">@Model.ProductType.ToUpper() <span id="emblem">]|[</span> <span id="product-code">@Model.ProductCode</span></h5>
+            <h3 class="details-title">@Model.Name</h3>
+        </div>
+    </div>
+    <div class="details-flex-column">
+        
+        <img class="imgViewDetails" alt="@Model.Name" src="@Model.Picture"/>
+         
+        <table>
+            <tr>
+                <th>Attributes</th>
+                <th>Values</th>
+            </tr>
+
+            <tr class="detailsTable">
+                <td class=attributeType>Brand</td>
+                <td class=attributeValue>@Model.Brand</td>
+            </tr>
+        @foreach(var item in Model.Attributes)
+        {
+            <tr class="detailsTable">
+                <td class=attributeType>@item.Item1</td>
+                <td class=attributeValue>@item.Item2</td>
+            </tr>
+        }
+        </table>
+    </div>
+    @if (!User.IsInRole(Roles.adminRole))
+    {
+        <a id="details-button" class="btn btn-primary" asp-controller="ShoppingCart" asp-action="AddItemToCart" asp-route-productId="@Model.Id">Add to cart =<span id="priceSpan">@Model.Price$</span></a>
+    }
+</div>

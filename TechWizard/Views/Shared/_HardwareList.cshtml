@@ -1,0 +1,146 @@
+﻿@using TechWizard.Business.ViewModels
+@model PublicHardwareViewModel
+
+<div class="view-filters">
+    
+    @using (Html.BeginForm("GetHardwareByFilters", "Hardware", FormMethod.Get))
+    {
+        <button class="btn btn-primary" id="filter-btn" type="submit">]|[ FILTER YOUR GEAR</button> 
+
+        @* PRICE FILTER *@
+        <div class="sectioon">
+            <div class="filterName">
+                <h4>Price Range</h4>
+                @if (Model.FilteredMaxPrice != 0 && @Model.FilteredMinPrice != 0)
+                {
+                    <div class="sliderDiv">
+                        <label id="minPriceLabel" for="minPriceBox">Minimum Price: @Model.FilteredMinPrice $</label>
+                        <input id="minPriceBox" name="minPrice" type="range" min="1" max="@Model.MaxPrice" value="@Model.FilteredMinPrice" step="1"/>
+                    </div>
+                    <div class="sliderDiv">
+                        <label id="maxPriceLabel" for="maxPriceBox">Maximum Price: @Model.FilteredMaxPrice $</label>
+                         <input id="maxPriceBox" name="maxPrice" type="range" min="2" max="@Model.MaxPrice" value="@Model.FilteredMaxPrice" step="1"/>
+                    </div>
+                }
+                else
+                {
+                    <div class="sliderDiv">
+                        <label id="minPriceLabel" for="minPriceBox">Minimum Price: @Model.FilteredMinPrice $</label>
+                        <input id="minPriceBox" name="minPrice" type="range" min="1" max="@Model.MaxPrice" value="@Model.FilteredMinPrice" step="1"/>
+                    </div>
+                    <div class="sliderDiv">
+                        <label id="maxPriceLabel" for="maxPriceBox">Maximum Price: @Model.MaxPrice $</label>
+                         <input id="maxPriceBox" name="maxPrice" type="range" min="2" max="@Model.MaxPrice" value="@Model.MaxPrice" step="1"/>
+                    </div>
+                }
+             </div>
+             
+            @* BRAND FILTER *@
+            <div class="filterName"><h4>Brands</h4></div>
+            @foreach(var dto in Model.AllBrandNames)
+            {
+                if (Model.CheckedBrandNames.Contains(dto))
+                {
+                    <div class="filterValue">
+                        <input id="@dto" class="filter-checkbox" name="brands" value="@dto" type="checkbox" checked/>
+                        <label for="@dto" class="filter-label">@dto</label> 
+                    </div>
+                }
+                else
+                {
+                    <div class="filterValue">
+                        <input id="@dto" class="filter-checkbox" name="brands" value="@dto" type="checkbox"/>
+                        <label for="@dto" class="filter-label">@dto</label> 
+                    </div>
+                }
+            }
+        </div>
+
+        @* DINAMICKI ATRIBUT FILTERI *@
+        if(Model.FilterDTO != null)
+        {
+            @foreach (var attributeName in Model.FilterDTO.AttIdAttName)
+            {
+                <div class="sectioon">
+
+                <div class="filterName">
+                    <h4>@attributeName.Item2</h4>
+                </div>
+                @foreach (var attributeValue in Model.FilterDTO.AttIdValue)
+                {
+                    <div class="filterValue">
+                        @if (attributeValue.Item1 == attributeName.Item1)
+                        {
+                            @if (Model.CbValues.Contains(attributeValue.Item2))
+                            {
+                                <input id="@attributeValue.Item2" 
+                                        class="filter-checkbox" 
+                                        name="cb" 
+                                        value="@attributeValue.Item1-@attributeValue.Item2" 
+                                        type="checkbox" 
+                                        checked/>
+
+                                <label for="@attributeValue.Item2" class="filter-label">
+                                    @attributeValue.Item2
+                                </label>
+                            }
+                            else
+                            {
+                                <input id="@attributeValue.Item2" 
+                                        class="filter-checkbox" 
+                                        name="cb" 
+                                        value="@attributeValue.Item1-@attributeValue.Item2" 
+                                        type="checkbox"/>      
+
+                                <label for="@attributeValue.Item2" class="filter-label">
+                                    @attributeValue.Item2
+                                </label>
+                            }
+                        }                          
+                    </div>
+                }
+                </div>
+            }
+        }
+    }
+</div>
+
+<script>
+    const minPrice = document.querySelector("#minPriceBox");
+const maxPrice = document.querySelector("#maxPriceBox");
+
+const minPriceLabel = document.querySelector("#minPriceLabel");
+const maxPriceLabel = document.querySelector("#maxPriceLabel");
+
+
+
+minPrice.addEventListener("input", e => {
+    if (parseFloat(e.target.value) >= parseFloat(maxPrice.value)) {
+        maxPrice.value = parseFloat(e.target.value) + 1;
+    }
+    minPriceLabel.innerHTML = `Minimum Price: ${minPrice.value} $`;
+    maxPriceLabel.innerHTML = `Maximum Price: ${maxPrice.value} $`;
+});
+
+minPrice.addEventListener("load", e => {
+
+    minPriceLabel.innerHTML = `Minimum Price: ${minPriceLabel.value} $`;
+    maxPriceLabel.innerHTML = `Maximum Price: ${maxPriceLabel.value} $`;
+});
+
+
+
+maxPrice.addEventListener("input", e => {
+    if (parseFloat(e.target.value) <= parseFloat(minPrice.value)) {
+        minPrice.value = parseFloat(e.target.value) + 1;
+    }
+    minPriceLabel.innerHTML = `Minimum Price: ${minPrice.value} $`;
+    maxPriceLabel.innerHTML = `Maximum Price: ${maxPrice.value} $`;
+});
+
+maxPrice.addEventListener("load", e => {
+
+    minPriceLabel.innerHTML = `Minimum Price: ${minPriceLabel.value} $`;
+    maxPriceLabel.innerHTML = `Maximum Price: ${maxPriceLabel.value} $`;
+});
+</script>

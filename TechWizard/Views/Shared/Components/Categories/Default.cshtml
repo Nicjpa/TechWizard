@@ -1,0 +1,14 @@
+﻿@using TechWizard.Data.Models.Entities
+@model List<ProductType> 
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> Gear</a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" asp-controller="Hardware" asp-action="GetHardwareByFilters" asp-route-id=@null>All Gear</a>
+        @foreach(var hardwareType in Model)
+        {
+            <a class="dropdown-item" asp-controller="Hardware" asp-action="GetHardwareByFilters" asp-route-id="@hardwareType.Id"> @hardwareType.Name</a>
+        }
+    </div>
+</li>
+

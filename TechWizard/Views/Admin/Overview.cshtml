@@ -1,0 +1,113 @@
+﻿@using TechWizard.Business.ViewModels
+@model AdminHardwareViewModel
+@{
+    ViewData["Title"] = "AdminOps";
+}
+
+
+@if(Model.ConfirmationMessage != null)
+{
+    <div id="adminActionIf">
+        <h4 id="messageSignil">]|[</h4>
+        <h5 id="messageSent">@Model.ConfirmationMessage</h5>
+    </div>
+}
+else
+{
+    <div id="adminActionElse">
+        <h1 id="messageSignil" class="glow">/\DM]|[N</h1> <span class="glow wizardSignilglow"><img src="/mySVGs/techWizBlack.svg" id="myAdminSVG"></span><h1 id="messageSignil" class="glow"> CONTROL</h1>
+    </div>
+}
+
+<div id="controlPanel">
+    <div id="buttonInterface">
+        <a class="nav-link adminBtn2 bi bi-cpu" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"> Create New Gear</a>
+        <div class="dropdown-menu">
+            @foreach(var hardwareType in Model.Categories)
+            {
+                <a class="dropdown-item" asp-controller="Admin" asp-action="CreateProduct" asp-route-productTypeid="@hardwareType.Id">@hardwareType.Name</a>
+            }
+        </div>
+        <a class="nav-link adminBtn3 bi bi-slack" asp-controller="Admin" asp-action="AddNewBrand"> Add New Brand</a>
+        @if(!Model.isShoppingOperation)
+        {
+            <a class="nav-link adminBtn3 bi bi-cart4" asp-controller="Admin" asp-action="Overview" asp-route-isShoppingOperation="@true"> Shopping Orders</a>
+        }
+        else
+        {
+            <a class="nav-link adminBtn3 bi bi-device-hdd" asp-controller="Admin" asp-action="Overview" asp-route-isShoppingOperation="@false"> Product List</a>
+        }
+
+    </div>
+
+    @if (!Model.isShoppingOperation)
+    {
+        <div id="tableDeffinition">
+            <table id="adminTable">
+                <tr class="adminTr">
+                    <th class="adminTh">Edit Gear</th>
+                    <th class="adminTh">ProductID</th>
+                    <th class="adminTh">Category</th>
+                    <th class="adminTh">Title</th>
+                    <th class="adminTh">Price</th>
+                    <th class="adminTh">Promotion</th>
+                    <th class="adminTh">Quantity</th>
+                    <th class="adminTh">Visible</th>
+                </tr>
+                @foreach (var product in Model.Products)
+                {
+                    <tr class="adminTr">
+                        <td class="adminTd">
+                            <a class="wholeArea" asp-controller="Admin" asp-action="UpdateProduct" asp-route-productId="@product.Id" asp-route-productTypeName="@product.Type.Name">
+                                <img class="productThmb" src="@product.Picture"/>
+                            </a>
+                        </td>
+                        <td class="adminTd">@product.Id</td>
+                        <td class="adminTd">@product.Type.Name</td>
+                        <td class="adminTd">@product.Name</td>
+                        <td class="adminTd">$@product.Price</td>
+                        <td class="adminTd">@product.OnPromotion</td>
+                        <td class="adminTd">@product.Quantity</td>
+                        <td class="adminTd">@product.IsVisible</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    else
+    {
+        <div id="tableDeffinition">
+            <table id="adminTable">
+                <tr class="adminTr">
+                    <th class="adminThOd">OrderNumber</th>
+                    <th class="adminThOd">TotalCharge</th>
+                    <th class="adminThOd">ProdDiff</th>
+                    <th class="adminThOd">ProdSum</th>
+                    <th class="adminThOd">CustomerID</th>
+                    <th class="adminThOd">Email</th>
+                    <th class="adminThOd">PhoneNumber</th>
+                    <th class="adminThOd">FullName</th>
+                    <th class="adminThOd">StreetAddress</th>
+                    <th class="adminThOd">City</th>
+                    <th class="adminThOd">DateCreated</th>
+                </tr>
+                @foreach (var order in Model.OrderDetails)
+                {
+                    <tr class="adminTr">
+                        <td class="adminTdOd">@order.OrderNumber</td>
+                        <td class="adminTdOd">@order.TotalCharge</td>
+                        <td class="adminTdOd">@order.NumOfDifferntProducts</td>
+                        <td class="adminTdOd">@order.TotalNumOfProducts</td>
+                        <td class="adminTdOd">@order.CustomerId</td>
+                        <td class="adminTdOd">@order.Email</td>
+                        <td class="adminTdOd">@order.PhoneNumber</td>
+                        <td class="adminTdOd">@order.FirstName @order.LastName</td>
+                        <td class="adminTdOd">@order.StreetAddress</td>
+                        <td class="adminTdOd">@order.City</td>
+                        <td class="adminTdOd">@order.DateCreated</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+</div>

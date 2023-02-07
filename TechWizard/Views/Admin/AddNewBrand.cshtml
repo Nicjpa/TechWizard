@@ -1,0 +1,31 @@
+﻿@using TechWizard.Business.ViewModels
+@model AdminHardwareViewModel
+@{
+    ViewData["Title"] = "NewBrand";
+}
+
+<div class="form-group">
+    
+    <label  class="formLabel col-md-5"><h1>Add New Brand</h1></label>
+</div>
+
+
+<form asp-action="AddNewBrand" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+    <div id="contactForm">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="@Model.BrandName" class="formLabel col-md-5">Name</label>
+            <div class="col-md-5">
+                <input asp-for="@Model.BrandName" type="text" autocomplete="off" class="formTextInput"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <input type="submit" id="contactBtn" value="Create"/>
+            </div>
+        </div>
+
+    </div>
+</form>

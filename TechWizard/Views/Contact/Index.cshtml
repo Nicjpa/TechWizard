@@ -1,0 +1,39 @@
+﻿@using TechWizard.Business.ViewModels.DTOs
+@model ContactDTO
+@{
+    ViewData["Title"] = "Contact";
+}
+
+
+<div id="contatcContainer">
+    <div id="mapFrame">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22653.092338826988!2d20.479999999999997!3d44.78821465!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475a717e06352b9b%3A0x858fab5de3fa1631!2sStadion%20Shopping%20Center!5e0!3m2!1ssr!2srs!4v1662921776937!5m2!1ssr!2srs" width="700" height="700" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <form asp-action="Index" method="post" class="form-horizontal" role="form">
+    <div id="contactForm">
+        <h3 id="contactUs">]|[ Contact us</h3>
+        <div id="validationDiv">
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="formLabel col-md-5">Your Email</label>
+            <div class="col-md-5">
+                <input asp-for="Email" type="text" autocomplete="off" class="formTextInput"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Message" class="formLabel col-md-5">Your Message</label>
+            <div class="col-md-5">
+                <textarea id="messageBox" asp-for="Message" type="text" value="" autocomplete="off" class="formTextInput"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <input type="submit" id="contactBtn" value="Send Message"/>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>

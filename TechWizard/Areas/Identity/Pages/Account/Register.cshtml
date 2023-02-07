@@ -1,0 +1,75 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+
+<div class="row">
+    <div class="col-md-8">
+        
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <hr />
+            <div class="form-group centering">
+                <h1 id="regTitle"><span class="post">]|[</span> Become One Of Us <span class="post">]|[</span></h1>
+            </div>
+                <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="leftDivReg">
+                <div class="form-group">
+                    <label asp-for="Input.FirstName" class="regLabelStyle"></label>
+                    <input asp-for="Input.FirstName" class="form-control loginInput"  autocomplete="off"/>
+                    @*<span asp-validation-for="Input.FirstName" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.LastName" class="regLabelStyle"></label>
+                    <input asp-for="Input.LastName" class="form-control loginInput"  autocomplete="off"/>
+                    @*<span asp-validation-for="Input.LastName" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.StreetAddress" class="regLabelStyle"></label>
+                    <input asp-for="Input.StreetAddress" class="form-control loginInput"  autocomplete="off"/>
+                    @*<span asp-validation-for="Input.StreetAddress" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.City" class="regLabelStyle"></label>
+                    <input asp-for="Input.City" class="form-control loginInput"  autocomplete="off"/>
+                    @*<span asp-validation-for="Input.City" class="text-danger"></span>*@
+                </div>
+            </div>
+        <div class="rightDivReg">
+                <div class="form-group">
+                    <label asp-for="Input.PhoneNumber" class="regLabelStyle"></label>
+                    <input asp-for="Input.PhoneNumber" class="form-control loginInput"  autocomplete="off"/>
+                    @*<span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Email" class="regLabelStyle"></label>
+                    <input asp-for="Input.Email" class="form-control loginInput"  autocomplete="off"/>
+                    @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password" class="regLabelStyle"></label>
+                    <input asp-for="Input.Password" class="form-control loginInput"  autocomplete="off"/>
+                    @*<span asp-validation-for="Input.Password" class="text-danger"></span>*@
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword" class="regLabelStyle"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control loginInput"  autocomplete="off"/>
+                    @*<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>*@
+                </div>
+            </div>
+            <div class="form-group centering">
+                <button type="submit" class="btn btn-primary btnStyle" >Join the guild</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4  wizAnime wizardAdminGlow regRightSideStyle">
+        
+        <img src="/mySVGs/techWizBlack.svg" class="col-md-6 col-md-offset-2" id="mySVG">
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

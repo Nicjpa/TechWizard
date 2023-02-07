@@ -1,0 +1,126 @@
+﻿@using TechWizard.Business.ViewModels
+@model AdminHardwareViewModel
+@{
+    ViewData["Title"] = "NewProduct";
+}
+    
+       
+<form asp-action="CreateProduct" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+    <div id="contactForm">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <input asp-for="ProductTypeId" type="hidden" autocomplete="off" class="formTextInput" value="@Model.ProductTypeId"/>
+            <div class="form-group">
+                <label asp-for="@Model.ProductTypeName" class="formLabel col-md-5 crudTitle"><h1>@Model.ProductTypeName</h1></label>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.NewGear.Picture" class="formLabel col-md-5">Upload Picture</label>
+                <div class="col-md-5">
+                    <img id="previewIMG22" src="@Model.DefaultNoImage" class="formTextInput"/>
+                </div>
+            <div class="col-md-5">
+                <input id="selectIMG22" asp-for="@Model.NewGear.Picture" type="file" accept=".jpeg,.jpg,.png" autocomplete="off" class="formTextInput"/>
+                <input asp-for="@Model.DefaultNoImage" type="hidden"  autocomplete="off" class="formTextInput" value="@Model.DefaultNoImage"/>
+            </div>
+        
+            </div>
+        
+            <div class="form-group">
+                <label asp-for="@Model.NewGear.BrandName" class="formLabel col-md-5">Brand</label>
+                <div class="col-md-5">
+                    <select asp-for="@Model.NewGear.BrandName" class="formTextInput" data-val="true" data-val-required="didn't enter a brand">
+                        @foreach(var brand in Model.Brands)
+                        {
+                            <option value="@brand.Name">@brand.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.NewGear.Name" class="formLabel col-md-5">Name</label>
+                <div class="col-md-5">
+                    <input asp-for="@Model.NewGear.Name" type="text" autocomplete="off" class="formTextInput" data-val="true" data-val-required="didn't enter a name"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.NewGear.Price" class="formLabel col-md-5">Price</label>
+                <div class="col-md-5">
+                    <input asp-for="@Model.NewGear.Price" type="number" min="0.1" step="0.01" max="100000" autocomplete="off" class="formTextInput" data-val="true" data-val-required="didn't put a price"/>
+                </div>
+            </div>
+
+        
+            
+            <div class="form-group">
+                <label asp-for="@Model.NewGear.Quantity" class="formLabel col-md-5">Stock Quantity</label>
+                <div class="col-md-5">
+                    <input asp-for="@Model.NewGear.Quantity" type="number" min="0" step="1" max="9999" autocomplete="off" class="formTextInput" data-val="true" data-val-required="didn't put a quantity"/>
+                </div>
+            </div>
+            <div>
+                    <div class="form-group" >
+                        <label asp-for="@Model.NewGear.OnPromotion" class="formLabel col-md-5">Promote</label>
+                        <div class="col-md-5">
+                            <input asp-for="@Model.NewGear.OnPromotion" type="checkbox" autocomplete="off" style="width: 500px;"/>
+                        </div>
+                    </div>
+            
+
+                    <div class="form-group">
+                        <label asp-for="@Model.NewGear.IsVisible" class="formLabel col-md-5">Visible</label>
+                        <div class="col-md-5">
+                            <input asp-for="@Model.NewGear.IsVisible" type="checkbox" autocomplete="off" style="width: 500px;" checked/>
+                        </div>
+                    </div>
+            </div>
+        
+        @for(int i = 0; i < Model.Attributes.Count; i++)
+        {
+            <div class="form-group">
+                <label asp-for="AttributeValues" class="formLabel col-md-5">@Model.Attributes[i].Name</label>
+                <div class="col-md-5">
+                    @if(Model.AttributeValues.Count != 0)
+                    {
+                        <input asp-for="AttributeValues" type="text" autocomplete="off" class="formTextInput" value="@Model.AttributeValues[i]" data-val="true" data-val-required="attribute field cannot be empty"/>
+                    }
+                    else
+                    {
+                        <input asp-for="AttributeValues" type="text" autocomplete="off" class="formTextInput" value=""data-val="true" data-val-required="attribute field cannot be empty"/>
+                    }
+                    <input asp-for="AttributeIDs" type="hidden" autocomplete="off" class="formTextInput" value="@Model.Attributes[i].Id"/>
+                    
+                    <span asp-validation-for="AttributeValues" class="text-danger"></span>
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-5">
+                <input type="submit" id="contactBtn" value="Create"/>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    let inp = document.querySelector("#selectIMG22");
+
+inp.addEventListener("change", function (e) {
+    let file = this.files[0];
+    let reader = new FileReader();
+    reader.onload = function () {
+        document.querySelector('#previewIMG22').src = this.result;
+    };
+    reader.readAsDataURL(file);
+}, false);
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+

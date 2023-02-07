@@ -1,0 +1,75 @@
+﻿@using TechWizard.Data.Models.ShoppingCartEntities
+@model ShoppingCart
+@{
+    ViewData["Title"] = "ShoppingCart";
+}
+
+
+<div class="infoContainer">
+    <h3 class="cartReport">@Model.ActiveOrder.AmountOfDiffernetItems DIFFERENT ITEMS IN CART</h3>
+    <h3 class="cartReport">@Model.ActiveOrder.AmountOfAllItems ITEMS IN TOTAL</h3>
+    <h3 class="cartReport">TOTAL CHARGE: $@Model.ActiveOrder.TotalCharge</h3>
+</div>
+
+@if (Model.ActiveOrder.AmountOfAllItems > 0)
+{
+    <div class="infoContainer">
+        <a class="PayBtn btn btn-primary" 
+    asp-controller="ShoppingCart"  
+    asp-action="Payment"  
+    asp-route-userId="@Model.CustomerId"
+    asp-route-orderId="@Model.ActiveOrder.Id">]|[ YOUR GEAR AWAITS ]|[</a>
+    </div>
+}
+
+<div id="controlPanel" class="cpChart">
+    <div id="tableDeffinition" class="tableDeffChart">
+        <table id="adminTable" class="tableChart">
+            <tr class="adminTr">
+                <th class="adminTh chartTh">Picture</th>
+                <th class="adminTh chartTh">ProductCode</th>
+                <th class="adminTh chartTh">Title</th>
+                <th class="adminTh chartTh">AmountOfUnits</th>
+                <th class="adminTh chartTh">PricePerUnit</th>
+                <th class="adminTh chartTh">TotalPrice</th>
+                <th class="adminTh chartTh">Add/Remove</th>
+            </tr>
+            @foreach(var item in Model.ActiveOrder.AllItems)
+            {
+                <tr class="adminTr">
+                    <td class="adminTd chartTd">
+                        <a class="wholeArea" 
+                            asp-controller="Hardware" 
+                            asp-action="HardwareDetails" asp-route-id="@item.Product.Id">
+                            <img class="productThmb" src="@item.Product.Picture"/>
+                        </a>
+                    </td>
+                    <td class="adminTd chartTd">@item.Product.ProductCode</td>
+                    <td class="adminTd chartTd">@item.Product.Name</td>
+                    <td class="adminTd chartTd">@item.Units</td>
+                    <td class="adminTd chartTd">$ @item.Product.Price</td>
+                    <td class="adminTd chartTd">$ @item.TotalPrice</td>
+                    <td class="adminTd chartTd">                  
+                        <a 
+                            class="inlinePlusMinusBtns" 
+                            asp-controller="ShoppingCart" 
+                            asp-action="AdjustItemUnits" 
+                            asp-route-orderId="@Model.ActiveOrder.Id"
+                            asp-route-productId="@item.Product.Id" 
+                            asp-route-itemPrice="@item.Product.Price"
+                            asp-route-flipper="@true">+</a>
+
+                        <a 
+                            class="inlinePlusMinusBtns" 
+                            asp-controller="ShoppingCart" 
+                            asp-action="AdjustItemUnits" 
+                            asp-route-orderId="@Model.ActiveOrder.Id"
+                            asp-route-productId="@item.Product.Id" 
+                            asp-route-itemPrice="@item.Product.Price"
+                            asp-route-flipper="@false">-</a>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

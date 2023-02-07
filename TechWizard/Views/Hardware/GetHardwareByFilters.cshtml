@@ -1,0 +1,33 @@
+﻿@using System.Globalization
+@using TechWizard.Business.ViewModels
+@model PublicHardwareViewModel
+@{
+    ViewData["Title"] = "Fresh Gear";
+}
+
+@if (Model.HardwareViewDTOs.Count != 0)
+{
+    <div>
+        <div class="view-container">
+           <partial name="_HardwareList" model="Model"/>
+        </div>
+        
+        <div class="row">
+        @foreach (var hardware in Model.HardwareViewDTOs)
+        {
+            <partial name="_Card" model="hardware"/>
+        }
+        </div>
+    </div>
+}
+else
+{
+    <div id="adminActionIf" style="position:relative; top:150px;">
+        <h4 id="messageSignil">]|[</h4>
+        <h5 id="messageSent">No Results...</h5>
+    </div>
+}
+
+
+
+

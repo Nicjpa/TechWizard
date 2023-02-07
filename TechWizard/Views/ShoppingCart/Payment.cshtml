@@ -1,0 +1,82 @@
+﻿@using TechWizard.Business.ViewModels
+@model ShoppingViewModel
+@{
+    ViewData["Title"] = "Payment";
+}
+
+
+
+<div class="row">
+    <div class="col-md-8">
+        
+        <form asp-action="OrderMade" method="post" class="form-vertical" role="form" autocomplete="off">
+            <hr />
+            <div class="form-group centering">
+                <h1 id="regTitle">
+                    <span class="post">]|[</span> 
+                    <span class="post positioning"><img src="/mySVGs/techWizBlack.svg" id="loginSVG"  style="width:150px;  filter:invert(100%) sepia(8%) saturate(710%) hue-rotate(61deg) brightness(110%) contrast(100%);"></span>
+                    <span class="post">]|[</span>
+                </h1>
+            </div>
+            <div class="leftDivReg" style="top: -20px;">
+                <div class="form-group">
+                    <label asp-for="@Model.Customer.FirstName" class="regLabelStyle"></label>
+                    <input asp-for="@Model.Customer.FirstName" class="form-control loginInput" autocomplete="off"/>
+                    <span asp-validation-for="@Model.Customer.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Customer.LastName" class="regLabelStyle"></label>
+                    <input asp-for="@Model.Customer.LastName" class="form-control loginInput"  autocomplete="off"/>
+                    <span asp-validation-for="@Model.Customer.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Customer.StreetAddress" class="regLabelStyle"></label>
+                    <input asp-for="@Model.Customer.StreetAddress" class="form-control loginInput"  autocomplete="off"/>
+                    <span asp-validation-for="@Model.Customer.StreetAddress" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="rightDivReg" style="top: -20px;">
+                <div class="form-group">
+                    <label asp-for="@Model.Customer.City" class="regLabelStyle"></label>
+                    <input asp-for="@Model.Customer.City" class="form-control loginInput"  autocomplete="off"/>
+                    <span asp-validation-for="@Model.Customer.City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Customer.PhoneNumber" class="regLabelStyle"></label>
+                    <input asp-for="@Model.Customer.PhoneNumber" class="form-control loginInput" data-val="true" data-val-required="You didn't enter contact phone"  autocomplete="off"/>
+                    <span asp-validation-for="@Model.Customer.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Customer.Email" class="regLabelStyle"></label>
+                    <input asp-for="@Model.Customer.Email" class="form-control loginInput" data-val="true" data-val-required="You didn't enter email"  autocomplete="off"/>
+                    <span asp-validation-for="@Model.Customer.Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group centering">
+                <button type="submit" class="btn btn-primary btnStyle" style="position:relative; top:50px;">]|[ Pay Now ]|[</button>
+            </div>
+            <input asp-for="@Model.Order.AmountOfDiffernetItems" type="hidden"/>
+            <input asp-for="@Model.Order.AmountOfAllItems" type="hidden"/>
+            <input asp-for="@Model.Order.TotalCharge" type="hidden"/>
+            <input asp-for="@Model.Order.Id" type="hidden"/>
+            <input asp-for="@Model.Customer.Id" type="hidden"/>
+        </form>
+    </div>
+    <div class="col-md-4  wizAnime  regRightSideStyle paymentDetails">
+        <h1 class="orderReadyStyle"><span>]|[</span> Your Order <span>]|[</span></h1>
+        @foreach(var item in Model.Order.AllItems)
+        {
+            <h6 class="orderReadyStyle">@item.Units x @item.Product.Type.Name - @item.Product.Name - $@item.Product.Price</h6>
+        }
+        <h5 class="orderReadyStyleH">Total Of Different Items: @Model.Order.AmountOfDiffernetItems</h5>
+        <h4 class="orderReadyStyleH">Total Items: @Model.Order.AmountOfAllItems</h4>
+        <h3 class="orderReadyStyleH">Amount: $@Model.Order.TotalCharge</h3>
+        
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
