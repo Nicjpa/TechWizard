@@ -2,7 +2,7 @@ Project still has certain flaws, backend has bug with price filter slider, while
 
 It has admin and customer side, admin side has it's own management control, while customer side has shopping cart and possiblity to buy fresh gear.
 
-In general it's functional WebStore and it looks cool, feel free to check it out..
+In general it's fully functional WebStore and it looks cool, feel free to check it out..
 
 Login credentials:
 
